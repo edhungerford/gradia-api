@@ -9,8 +9,8 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     res.json({
-        characters: 'http://localhost:3001/characters',
-        story: "http://localhost:3001/story"});
+        characters: 'https://gradia.edsite.black/characters',
+        story: "httpss://gradia.edsite.black/story"});
 });
 
 app.use('/characters', charRouter);
