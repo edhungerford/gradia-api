@@ -7,14 +7,14 @@ const storyRouter   = require('./routes/story/story');
 
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.json({
         characters: 'http://localhost:3001/characters',
         story: "http://localhost:3001/story"});
 });
 
-app.use('/characters', charRouter);
-app.use('/story', storyRouter);
+app.use('/api/characters', charRouter);
+app.use('/api/story', storyRouter);
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
