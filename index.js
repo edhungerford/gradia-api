@@ -7,7 +7,7 @@ const storyRouter   = require('./routes/story/story');
 
 app.use(cors());
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
     res.json({
         characters: 'http://localhost:3001/characters',
         story: "http://localhost:3001/story"});
