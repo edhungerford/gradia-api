@@ -59,15 +59,46 @@ const story = require('./services/story');
     
     // console.table(results[1])
 
-    const results = db.prepare('SELECT recap.id, title, story, stinger, acts.act FROM recap JOIN acts ON recap.act=acts.id WHERE recap.id=14').get();
-    const features = db.prepare('SELECT characters.id, name FROM appearances JOIN characters ON appearances.character=characters.id WHERE appearances.session=14').all();
-    results.features = features.map(row => row.name);
-    console.log(results.features)
+    const ten = {
+        "title": "Session 10: High Tide",
+        "act": "2",
+        "story": "Having received word of Guido's distress signal, the party and Silt commandeer a vehicle into the desert. They arrive at a huge cave, once well-known amongst daredevils for being haunted. Once inside, they notice a shallow layer of water on the ground, and rooms which seem to display a tableaux of a child being raised. Gal determines that the water here is of the same kind as the water in Nadir's phials (by drinking it).\nThe party soon finds they are trapped inside the cave, their entrance having been blocked by magical means. Electing to split up, Piper and Gal go north, while the Mariner and Silt go west. When Piper and Gal are accosted by a water elemental, Silt immediately notices and warns the Mariner, but in trying to circumnavigate to where they are, the Mariner runs into another elemental! The Mariner's group manage to take down their foe with minimal damage suffered, but the other group is not so lucky. By the time the Mariner makes it back to the other group, their unconscious forms are nowhere to be found.\nSilt and the Mariner continue to explore the cave, with Silt reasoning that Piper and Gal must be further inside the cave. Although they find the odd treasure, clues are sparse. They finally enter into a wide room, which contains none other than Methuselah, the head of the Mariners...",
+        "stinger": "A puppet is an object, often resembling a human, animal or mythical figure, that is animated or manipulated by a person called a puppeteer."
+    }
 
-    const grabGourd = db.prepare("SELECT name, url FROM characters WHERE name='The Gradian Gourd'").get();
-    console.log(grabGourd)
-    const updatePicture = db.prepare("UPDATE characters SET url='https://cdn.discordapp.com/attachments/837882618799849563/943860166380621844/20220212_024008.jpg' WHERE name='The Gradian Gourd'").run();
-    console.log(grabGourd)
+    const tenAppearances = [
+        {
+            "character":"1",
+            "session":"16",
+            "died": ""
+        },
+        {
+            "character":"2",
+            "session":"16",
+            "died":""
+        },
+        {
+            "character":"3",
+            "session":"16",
+            "died":""
+        },
+        {
+            "character":"15",
+            "session":"16",
+            "died":""
+        }
+    ]
+    
+    let appearancesStmt = db.prepare("INSERT INTO appearances (character, session, died) VALUES (?,?,?)");
+    let recapStmt = db.prepare("INSERT INTO recap (title, act, story, stinger) VALUES (?,?,?,?)");
+
+    const insertRecap = db.transaction((recap, appear) => {
+        console.log(recap.title)
+        recapStmt.run(recap.title, recap.act, recap.story, recap.stinger);
+        for(const appearance of appear) appearancesStmt.run(appearance.character, appearance.session, appearance.died);
+    })
+
+    insertRecap(ten, tenAppearances);
 
 db.close();
 
