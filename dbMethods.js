@@ -59,7 +59,9 @@ const story = require('./services/story');
     
     // console.table(results[1])
 
-    
+    // const duck = db.prepare(`UPDATE characters 
+    // SET url = 'https://cdn.discordapp.com/attachments/916569335336677396/1013163184733048872/Fresh_Hunt.jpg'
+    // WHERE id = 22`).run();
 
 
 db.close();
