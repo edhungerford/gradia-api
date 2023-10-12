@@ -8,9 +8,9 @@ function getAll(database) {
         let features = db.prepare(`SELECT characters.id AS character_id, appearances.id AS appearance_id, name FROM appearances JOIN characters ON appearances.character=characters.id WHERE appearances.session=${row.id}`).all()
         results[row.id - 1].features = features
         features.forEach(row => {
-            row.link = `http://localhost:3001/api/${database}/characters/${row.character_id}`
+            row.link = `https://gradia.edsite.black/api/${database}/characters/${row.character_id}`
         })
-        results[row.id - 1].permalink = `http://localhost:3001/api/${database}/story/${results[row.id - 1].id}`
+        results[row.id - 1].permalink = `https://gradia.edsite.black/api/${database}/story/${results[row.id - 1].id}`
     })
     return results;
 }
@@ -21,7 +21,7 @@ function getOne(id, database) {
     const features = db.prepare(`SELECT characters.id AS character_id, appearances.id AS appearance_id, name FROM appearances JOIN characters ON appearances.character=characters.id WHERE appearances.session=${id}`).all();
     results.features = features
     features.forEach(row => {
-        row.link = `http://localhost:3001/api/${database}/characters/${row.character_id}`
+        row.link = `https://gradia.edsite.black/api/${database}/characters/${row.character_id}`
     })
     return results;
 }
